@@ -28,7 +28,7 @@ internal sealed class WeatherService
     private static HttpClient CreateClient()
     {
         var client = new HttpClient { Timeout = TimeSpan.FromSeconds(15) };
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("WorldWeather/0.2 (zoeyrus@gmail.com)");
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("FairSky/0.5 (+https://github.com/zoeyrus/fairsky-cmdpal)");
         return client;
     }
 
