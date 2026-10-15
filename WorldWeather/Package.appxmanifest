@@ -9,14 +9,14 @@
   IgnorableNamespaces="uap uap3 rescap">
 
   <Identity
-    Name="WorldWeather"
+    Name="FairSky"
     Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
-    Version="0.0.4.0" />
+    Version="0.0.5.0" />
   <!-- When you're ready to publish your extension, you'll need to change the
        Publisher= to match your own identity -->
 
   <Properties>
-    <DisplayName>Open World Weather</DisplayName>
+    <DisplayName>FairSky</DisplayName>
     <PublisherDisplayName>A Lone Developer</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Open World Weather"
-        Description="Open World Weather"
+        DisplayName="FairSky"
+        Description="FairSky"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -46,8 +46,8 @@
       <Extensions>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
-            <com:ExeServer Executable="WorldWeather.exe" Arguments="-RegisterProcessAsComServer" DisplayName="Open World Weather">
-              <com:Class Id="4926e5bc-a52a-4c8c-8e26-0c737e09ce21" DisplayName="Open World Weather" />
+            <com:ExeServer Executable="WorldWeather.exe" Arguments="-RegisterProcessAsComServer" DisplayName="FairSky">
+              <com:Class Id="4926e5bc-a52a-4c8c-8e26-0c737e09ce21" DisplayName="FairSky" />
             </com:ExeServer>
           </com:ComServer>
         </com:Extension>
@@ -55,8 +55,8 @@
           <uap3:AppExtension Name="com.microsoft.commandpalette"
             Id="ID"
             PublicFolder="Public"
-            DisplayName="Open World Weather"
-            Description="Open World Weather">
+            DisplayName="FairSky"
+            Description="FairSky">
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
