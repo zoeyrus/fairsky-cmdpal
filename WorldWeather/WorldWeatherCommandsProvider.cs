@@ -42,10 +42,10 @@ public partial class WorldWeatherCommandsProvider : CommandProvider
         if (!File.Exists(path))
         {
             var defaults = new[] { new City("Москва", 55.7558, 37.6173), new City("Минск", 53.9006, 27.5590), new City("Токио", 35.6762, 139.6503) };
-            File.WriteAllText(path, JsonSerializer.Serialize(defaults, new JsonSerializerOptions { WriteIndented = true }));
+            File.WriteAllText(path, JsonSerializer.Serialize(defaults, WeatherJsonContext.Default.CityArray));
             return defaults;
         }
-        try { return JsonSerializer.Deserialize<City[]>(File.ReadAllText(path))?.Take(12).ToArray() ?? []; }
+        try { return JsonSerializer.Deserialize(File.ReadAllText(path), WeatherJsonContext.Default.CityArray)?.Take(12).ToArray() ?? []; }
         catch { return [new City("Москва", 55.7558, 37.6173)]; }
     }
 }

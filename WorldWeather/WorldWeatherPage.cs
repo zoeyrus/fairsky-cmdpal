@@ -56,31 +56,39 @@ internal sealed partial class WorldWeatherPage : ContentPage
         }
     }
 
-    private string FormatForecast(WeatherData weather)
+    
+private string FormatForecast(WeatherData weather)
+{
+    var culture = CultureInfo.GetCultureInfo("ru-RU");
+    var sb = new StringBuilder();
+
+    sb.AppendLine(culture, $"# {WeatherService.Symbol(weather.Code)} Погода — {_city.Name}");
+    sb.AppendLine();
+    sb.AppendLine(culture, $"## {weather.Temperature:+0.#;-0.#;0} °C");
+    sb.AppendLine();
+    sb.AppendLine(culture, $"**{WeatherService.Description(weather.Code)}**");
+    sb.AppendLine();
+    sb.AppendLine(culture, $"- Ощущается как: **{weather.FeelsLike:+0.#;-0.#;0} °C**");
+    sb.AppendLine(culture, $"- Влажность: **{weather.Humidity} %**");
+    sb.AppendLine(culture, $"- Ветер: **{weather.Wind:0.#} м/с**");
+    sb.AppendLine();
+    sb.AppendLine("## Прогноз по дням");
+    sb.AppendLine();
+    sb.AppendLine("| Дата (UTC) | Мин. | Макс. | Условия |");
+    sb.AppendLine("|---|---:|---:|---|");
+
+    foreach (var day in weather.Days)
     {
-        var sb = new StringBuilder();
-        sb.AppendLine($"# {WeatherService.Symbol(weather.Code)} Погода — {_city.Name}");
-        sb.AppendLine();
-        sb.AppendLine($"## {weather.Temperature:+0.#;-0.#;0} °C");
-        sb.AppendLine();
-        sb.AppendLine($"**{WeatherService.Description(weather.Code)}**");
-        sb.AppendLine();
-        sb.AppendLine($"- Ощущается как: **{weather.FeelsLike:+0.#;-0.#;0} °C**");
-        sb.AppendLine($"- Влажность: **{weather.Humidity} %**");
-        sb.AppendLine($"- Ветер: **{weather.Wind:0.#} м/с**");
-        sb.AppendLine();
-        sb.AppendLine("## Прогноз по дням");
-        sb.AppendLine();
-        sb.AppendLine("| Дата (UTC) | Мин. | Макс. | Условия |");
-        sb.AppendLine("|---|---:|---:|---|");
-        foreach (var day in weather.Days)
-        {
-            sb.AppendLine($"| {day.Date} | {day.Min:0.#} °C | {day.Max:0.#} °C | {WeatherService.Description(day.Code)} |");
-        }
-        sb.AppendLine();
-        sb.AppendLine($"Источник: MET Norway · Прогноз на {weather.Updated}");
-        if (weather.Stale)
-            sb.AppendLine("\n*Нет свежих данных: показан кешированный прогноз.*");
-        return sb.ToString();
+        sb.AppendLine(culture, $"| {day.Date} | {day.Min:0.#} °C | {day.Max:0.#} °C | {WeatherService.Description(day.Code)} |");
     }
+
+    sb.AppendLine();
+    sb.AppendLine(culture, $"Источник: MET Norway · Прогноз на {weather.Updated}");
+
+    if (weather.Stale)
+        sb.AppendLine("\n*Нет свежих данных: показан кешированный прогноз.*");
+
+    return sb.ToString();
+}
+
 }
