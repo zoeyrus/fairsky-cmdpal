@@ -10,14 +10,14 @@
 
   <Identity
     Name="FairSky"
-    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Publisher="CN=FairSky Development"
     Version="0.0.5.0" />
   <!-- When you're ready to publish your extension, you'll need to change the
        Publisher= to match your own identity -->
 
   <Properties>
     <DisplayName>FairSky</DisplayName>
-    <PublisherDisplayName>A Lone Developer</PublisherDisplayName>
+    <PublisherDisplayName>FairSky Development</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -46,8 +46,8 @@
       <Extensions>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
-            <com:ExeServer Executable="WorldWeather.exe" Arguments="-RegisterProcessAsComServer" DisplayName="FairSky">
-              <com:Class Id="4926e5bc-a52a-4c8c-8e26-0c737e09ce21" DisplayName="FairSky" />
+            <com:ExeServer Executable="FairSky.exe" Arguments="-RegisterProcessAsComServer" DisplayName="FairSky">
+              <com:Class Id="b9b128c4-0482-4078-b42d-095462a51ac6" DisplayName="FairSky" />
             </com:ExeServer>
           </com:ComServer>
         </com:Extension>
@@ -60,7 +60,7 @@
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
-                  <CreateInstance ClassId="4926e5bc-a52a-4c8c-8e26-0c737e09ce21" />
+                  <CreateInstance ClassId="b9b128c4-0482-4078-b42d-095462a51ac6" />
                 </Activation>
                 <SupportedInterfaces>
                   <Commands/>

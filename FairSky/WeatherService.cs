@@ -10,7 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WorldWeather;
+namespace FairSky;
 
 public sealed record City(string Name, double Latitude, double Longitude);
 public sealed record DayWeather(string Date, double Max, double Min, int Code);
@@ -132,7 +132,7 @@ internal sealed class WeatherService
     }
 
     // Map MET Norway's symbolic condition strings to Open-Meteo/WMO-like codes
-    // already understood by the existing WorldWeatherPage / DockItem UI.
+    // already understood by the existing FairSkyPage / DockItem UI.
     private static int CodeFromSymbol(string symbol)
     {
         var s = symbol.ToLowerInvariant();

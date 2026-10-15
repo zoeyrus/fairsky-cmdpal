@@ -3,16 +3,16 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WorldWeather;
+namespace FairSky;
 
-internal sealed partial class WorldWeatherDockItem : ListItem, IDisposable
+internal sealed partial class FairSkyDockItem : ListItem, IDisposable
 {
     private readonly City _city;
     private readonly WeatherService _service;
     private readonly Timer _timer;
     private int _updating;
 
-    public WorldWeatherDockItem(City city, WeatherService service) : base(new WorldWeatherPage(city, service))
+    public FairSkyDockItem(City city, WeatherService service) : base(new FairSkyPage(city, service))
     {
         _city = city;
         _service = service;

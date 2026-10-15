@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
-namespace WorldWeather;
+namespace FairSky;
 
-internal sealed partial class WorldWeatherPage : ContentPage
+internal sealed partial class FairSkyPage : ContentPage
 {
     private readonly City _city;
     private readonly WeatherService _weather;
     private int _loadStarted;
     private string _markdown;
 
-    public WorldWeatherPage(City city, WeatherService weather)
+    public FairSkyPage(City city, WeatherService weather)
     {
         _city = city;
         _weather = weather;
         Title = $"Погода — {city.Name}";
         Name = city.Name;
-        Id = $"worldweather.details.{city.Latitude.ToString("F4", CultureInfo.InvariantCulture)}.{city.Longitude.ToString("F4", CultureInfo.InvariantCulture)}";
+        Id = $"fairsky.details.{city.Latitude.ToString("F4", CultureInfo.InvariantCulture)}.{city.Longitude.ToString("F4", CultureInfo.InvariantCulture)}";
         _markdown = $"# Погода — {_city.Name}\n\nЗагружаем прогноз от MET Norway…";
     }
 

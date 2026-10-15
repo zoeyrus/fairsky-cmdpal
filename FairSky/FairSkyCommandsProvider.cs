@@ -6,29 +6,29 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace WorldWeather;
+namespace FairSky;
 
-public partial class WorldWeatherCommandsProvider : CommandProvider
+public partial class FairSkyCommandsProvider : CommandProvider
 {
     private readonly ICommandItem[] _commands;
     private readonly ICommandItem[] _bands;
-    private readonly List<WorldWeatherDockItem> _items = [];
+    private readonly List<FairSkyDockItem> _items = [];
 
-    public WorldWeatherCommandsProvider()
+    public FairSkyCommandsProvider()
     {
         DisplayName = "FairSky";
-        Id = "org.worldweather.cmdpal";
+        Id = "org.fairsky.cmdpal";
         var service = new WeatherService();
         var config = LoadCities();
         var commands = new List<ICommandItem>();
         foreach (var city in config)
         {
-            var page = new WorldWeatherPage(city, service);
+            var page = new FairSkyPage(city, service);
             commands.Add(new CommandItem(page) { Title = $"Погода: {city.Name}" });
-            _items.Add(new WorldWeatherDockItem(city, service));
+            _items.Add(new FairSkyDockItem(city, service));
         }
         _commands = commands.ToArray();
-        _bands = [new WrappedDockItem(_items.Cast<IListItem>().ToArray(), "org.worldweather.cmdpal.cities", "WorldWeather")];
+        _bands = [new WrappedDockItem(_items.Cast<IListItem>().ToArray(), "org.fairsky.cmdpal.cities", "fairsky")];
     }
 
     public override ICommandItem[] TopLevelCommands() => _commands;
@@ -36,7 +36,7 @@ public partial class WorldWeatherCommandsProvider : CommandProvider
 
     private static City[] LoadCities()
     {
-        string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WorldWeather");
+        string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FairSky");
         string path = Path.Combine(dir, "cities.json");
         Directory.CreateDirectory(dir);
         if (!File.Exists(path))

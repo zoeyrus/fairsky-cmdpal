@@ -3,16 +3,16 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.CommandPalette.Extensions;
 
-namespace WorldWeather;
+namespace FairSky;
 
-[Guid("4926e5bc-a52a-4c8c-8e26-0c737e09ce21")]
-public sealed partial class WorldWeather : IExtension, IDisposable
+[Guid("b9b128c4-0482-4078-b42d-095462a51ac6")]
+public sealed partial class FairSky : IExtension, IDisposable
 {
     private readonly ManualResetEvent _extensionDisposedEvent;
 
-    private readonly WorldWeatherCommandsProvider _provider = new();
+    private readonly FairSkyCommandsProvider _provider = new();
 
-    public WorldWeather(ManualResetEvent extensionDisposedEvent)
+    public FairSky(ManualResetEvent extensionDisposedEvent)
     {
         this._extensionDisposedEvent = extensionDisposedEvent;
     }

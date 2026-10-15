@@ -14,7 +14,7 @@ FairSky displays weather forecasts for multiple cities in Command Palette Dock. 
 
 ## Project status
 
-**Early preview (based on the working WorldWeather 0.0.4.0 prototype).** This repository is being prepared for an open-source release. The first public installation package has not yet been verified or published. The initial UI uses Russian strings. Internationalization, city management, packaging and distribution are on the roadmap.
+**Early preview — FairSky 0.0.5.0.** The extension has been built, signed, and successfully installed in a local development environment. Weather forecasts and Command Palette Dock integration are functional. A publicly distributable installer has not yet been released. Internationalization, city management, and improved navigation remain on the roadmap. 
 
 ## Build from source
 
