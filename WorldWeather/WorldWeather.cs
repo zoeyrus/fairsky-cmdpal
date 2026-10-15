@@ -5,7 +5,7 @@ using Microsoft.CommandPalette.Extensions;
 
 namespace WorldWeather;
 
-[Guid("4926e5bc-a52a-4c8c-8e26-0c737e09ce21")]
+[Guid("b9b128c4-0482-4078-b42d-095462a51ac6")]
 public sealed partial class WorldWeather : IExtension, IDisposable
 {
     private readonly ManualResetEvent _extensionDisposedEvent;

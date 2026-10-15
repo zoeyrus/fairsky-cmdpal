@@ -17,7 +17,7 @@ public partial class WorldWeatherCommandsProvider : CommandProvider
     public WorldWeatherCommandsProvider()
     {
         DisplayName = "FairSky";
-        Id = "org.worldweather.cmdpal";
+        Id = "org.fairsky.cmdpal";
         var service = new WeatherService();
         var config = LoadCities();
         var commands = new List<ICommandItem>();
@@ -28,7 +28,7 @@ public partial class WorldWeatherCommandsProvider : CommandProvider
             _items.Add(new WorldWeatherDockItem(city, service));
         }
         _commands = commands.ToArray();
-        _bands = [new WrappedDockItem(_items.Cast<IListItem>().ToArray(), "org.worldweather.cmdpal.cities", "WorldWeather")];
+        _bands = [new WrappedDockItem(_items.Cast<IListItem>().ToArray(), "org.fairsky.cmdpal.cities", "fairsky")];
     }
 
     public override ICommandItem[] TopLevelCommands() => _commands;
@@ -36,7 +36,7 @@ public partial class WorldWeatherCommandsProvider : CommandProvider
 
     private static City[] LoadCities()
     {
-        string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WorldWeather");
+        string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FairSky");
         string path = Path.Combine(dir, "cities.json");
         Directory.CreateDirectory(dir);
         if (!File.Exists(path))
