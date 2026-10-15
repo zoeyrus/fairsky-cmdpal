@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WorldWeather (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true
+    },
+    "WorldWeather (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

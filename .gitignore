@@ -1,0 +1,32 @@
+# Build outputs
+**/bin/
+**/obj/
+**/AppPackages/
+**/.vs/
+TestResults/
+
+# Credentials and signing keys
+*.pfx
+*.p12
+*.p8
+*.pem
+*.key
+*.snk
+*.cer
+*.cert
+*.secrets.json
+.env
+.env.*
+!.env.example
+
+# Local machine and user data
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/settings.json
+cities.json
+
+# OS
+Thumbs.db
+.DS_Store
