@@ -30,7 +30,6 @@
 *.crt
 
 # Local development certificate
-WorldWeather-dev.pfx
 FairSky-dev.pfx
 
 # Local logs and temporary files

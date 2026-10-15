@@ -1,10 +1,10 @@
 {
   "profiles": {
-    "WorldWeather (Package)": {
+    "FairSky (Package)": {
       "commandName": "MsixPackage",
       "doNotLaunchApp": true
     },
-    "WorldWeather (Unpackaged)": {
+    "FairSky (Unpackaged)": {
       "commandName": "Project"
     }
   }

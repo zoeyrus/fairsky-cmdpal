@@ -46,7 +46,7 @@
       <Extensions>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
-            <com:ExeServer Executable="WorldWeather.exe" Arguments="-RegisterProcessAsComServer" DisplayName="FairSky">
+            <com:ExeServer Executable="FairSky.exe" Arguments="-RegisterProcessAsComServer" DisplayName="FairSky">
               <com:Class Id="b9b128c4-0482-4078-b42d-095462a51ac6" DisplayName="FairSky" />
             </com:ExeServer>
           </com:ComServer>

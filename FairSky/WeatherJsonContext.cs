@@ -1,7 +1,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace WorldWeather;
+namespace FairSky;
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(City[]))]
