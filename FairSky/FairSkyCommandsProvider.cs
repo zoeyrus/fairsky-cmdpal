@@ -20,12 +20,18 @@ public partial class FairSkyCommandsProvider : CommandProvider
         Id = "org.fairsky.cmdpal";
         var service = new WeatherService();
         var config = LoadCities();
-        var commands = new List<ICommandItem>();
+        var homePage = new FairSkyHomePage(config, service);
+        var commands = new List<ICommandItem>
+        {
+            new CommandItem(homePage)
+            {
+                Title = "FairSky",
+                Subtitle = "Погода в ваших городах"
+            }
+        };
         foreach (var city in config)
         {
-            var page = new FairSkyPage(city, service);
-            commands.Add(new CommandItem(page) { Title = $"Погода: {city.Name}" });
-            _items.Add(new FairSkyDockItem(city, service));
+        _items.Add(new FairSkyDockItem(city, service));
         }
         _commands = commands.ToArray();
         _bands = [new WrappedDockItem(_items.Cast<IListItem>().ToArray(), "org.fairsky.cmdpal.cities", "fairsky")];
