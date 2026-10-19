@@ -26,5 +26,9 @@ public sealed partial class FairSky : IExtension, IDisposable
         };
     }
 
-    public void Dispose() => this._extensionDisposedEvent.Set();
+    public void Dispose()
+    {
+        _provider.Dispose();
+        this._extensionDisposedEvent.Set();
+    }
 }

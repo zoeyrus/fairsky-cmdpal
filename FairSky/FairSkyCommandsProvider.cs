@@ -31,7 +31,7 @@ public partial class FairSkyCommandsProvider : CommandProvider
         };
         foreach (var city in config)
         {
-        _items.Add(new FairSkyDockItem(city, service));
+            _items.Add(new FairSkyDockItem(city, service));
         }
         _commands = commands.ToArray();
         _bands = [new WrappedDockItem(_items.Cast<IListItem>().ToArray(), "org.fairsky.cmdpal.cities", "fairsky")];
@@ -39,6 +39,13 @@ public partial class FairSkyCommandsProvider : CommandProvider
 
     public override ICommandItem[] TopLevelCommands() => _commands;
     public override ICommandItem[]? GetDockBands() => _bands;
+
+    public override void Dispose()
+    {
+        foreach (var item in _items) item.Dispose();
+        base.Dispose();
+        GC.SuppressFinalize(this);
+    }
 
     private static City[] LoadCities()
     {

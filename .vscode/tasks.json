@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "FairSky: Build Debug x64",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/FairSky/FairSky.csproj", "-c", "Debug", "-r", "win-x64", "-p:Platform=x64", "-p:AppxPackageSigningEnabled=false"],
+      "problemMatcher": "$msCompile",
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "FairSky: Check Dock",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["run", "--project", "${workspaceFolder}/tests/FairSky.Tests/FairSky.Tests.csproj", "-p:Platform=x64", "-p:AppxPackageSigningEnabled=false"],
+      "problemMatcher": "$msCompile",
+      "group": "test"
+    }
+  ]
+}
