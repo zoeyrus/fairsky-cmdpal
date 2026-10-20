@@ -83,11 +83,11 @@ internal sealed partial class FairSkyHomePage : ListPage
             string temperature = weather.Temperature.ToString(
                 "+0;-0;0", culture);
 
-            string symbol = WeatherService.Symbol(weather.Code);
+            item.Icon = WeatherIcons.Create(weather.Code);
             string description = WeatherService.Description(weather.Code);
 
             item.Subtitle =
-                $"{symbol} {temperature} °C · {description}" +
+                $"{temperature} °C · {description}" +
                 (weather.Stale ? " · Нет свежих данных" : "");
         }
         catch

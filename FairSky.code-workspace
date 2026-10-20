@@ -1,0 +1,5 @@
+{
+  "folders": [{ "path": "." }],
+  "settings": { "dotnet.defaultSolution": "FairSky.sln" },
+  "extensions": { "recommendations": ["GitHub.vscode-pull-request-github", "ms-dotnettools.csdevkit"] }
+}
