@@ -12,21 +12,30 @@ internal sealed partial class FairSkyPage : ContentPage
 {
     private readonly City _city;
     private readonly WeatherService _weather;
+    private readonly CityStore? _store;
     private int _loadStarted;
     private string _markdown;
 
-    public FairSkyPage(City city, WeatherService weather)
+    public FairSkyPage(City city, WeatherService weather, CityStore? store = null)
     {
         _city = city;
         _weather = weather;
+        _store = store;
+        RefreshCommands();
         Title = $"Погода — {city.Name}";
         Name = city.Name;
         Id = $"fairsky.details.{city.Latitude.ToString("F4", CultureInfo.InvariantCulture)}.{city.Longitude.ToString("F4", CultureInfo.InvariantCulture)}";
         _markdown = $"# Погода — {_city.Name}\n\nЗагружаем прогноз от MET Norway…";
     }
 
+    private void RefreshCommands()
+    {
+        if (_store is not null) Commands = CityActions.For(_city, _store, RefreshCommands);
+    }
+
     public override IContent[] GetContent()
     {
+        RefreshCommands();
         // Returning immediately is important: never block Command Palette on HTTP.
         if (Interlocked.Exchange(ref _loadStarted, 1) == 0)
         {

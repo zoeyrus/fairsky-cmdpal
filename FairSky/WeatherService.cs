@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FairSky;
 
-public sealed record City(string Name, double Latitude, double Longitude);
+public sealed record City(string Name, double Latitude, double Longitude, string? Country = null, string? Region = null);
 public sealed record DayWeather(string Date, double Max, double Min, int Code);
 public sealed record WeatherData(double Temperature, double FeelsLike, int Humidity, double Wind, int Code, string Updated, DayWeather[] Days, bool Stale = false);
 
