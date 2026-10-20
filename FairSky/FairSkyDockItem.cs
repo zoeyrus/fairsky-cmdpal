@@ -14,7 +14,7 @@ internal sealed partial class FairSkyDockItem : ListItem, IDisposable
     private int _updating;
     private bool _disposed;
 
-    public FairSkyDockItem(City city, WeatherService service, bool startRefresh = true) : base(new FairSkyPage(city, service))
+    public FairSkyDockItem(City city, WeatherService service, bool startRefresh = true, CityStore? store = null) : base(new FairSkyPage(city, service, store))
     {
         _city = city;
         _service = service;

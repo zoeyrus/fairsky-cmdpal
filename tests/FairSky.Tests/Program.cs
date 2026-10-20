@@ -66,3 +66,21 @@ var refresh = typeof(FairSkyDockItem).GetMethod("RefreshAsync", BindingFlags.Non
 await (Task)refresh.Invoke(dock, null)!;
 Check(notifications == 0, "Disposed Dock must not update");
 Console.WriteLine($"PASS: {checks} checks; SDK notifications, card states, navigation and disposal.");
+checks += await CityManagementChecks.RunAsync();
+Console.WriteLine($"PASS TOTAL: {checks} assertions.");
+
+if (Array.Exists(args, a => a == "--live-search"))
+{
+    var geocoding = new CitySearchService();
+    var forecasts = new WeatherService();
+    foreach (var query in new[] { "Нью-Йорк", "Берлин", "Лондон" })
+    {
+        var results = await geocoding.SearchAsync(query, System.Threading.CancellationToken.None);
+        if (results.Length == 0) throw new InvalidOperationException("Live search returned no results for " + query);
+        var selected = results[0];
+        var forecast = await forecasts.GetAsync(selected);
+        if (!double.IsFinite(forecast.Temperature) || forecast.Days.Length == 0)
+            throw new InvalidOperationException("Invalid live forecast for " + query);
+        Console.WriteLine($"LIVE PASS: {query} → {selected.Name}, {selected.Country}; {forecast.Temperature} C; {forecast.Days.Length} days");
+    }
+}

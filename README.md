@@ -4,9 +4,11 @@
 
 Check the weather in your saved cities from a compact Command Palette list, or keep city weather cards visible in Dock. Select a city to open a detailed forecast with temperature, humidity, wind and an outlook covering up to four UTC calendar days.
 
-## Available now
+## Available in the 0.0.8.0 development build
 
-- A searchable home page listing your configured cities.
+- Search for cities worldwide from the FairSky search box, with country/region labels.
+- Open a forecast without saving the city, or use the **More / Ещё** menu to add it to your cities.
+- Remove saved cities and move them up/down from the same menu. Changes are saved locally and update the Dock list.
 - Native Dock cards with a weather icon, temperature, city name and short condition description.
 - Detailed forecasts opened from either the home page or Dock.
 - Outlined color weather icons shared across Dock, the city list and forecast pages, designed for light and dark themes.
@@ -16,34 +18,32 @@ Check the weather in your saved cities from a compact Command Palette list, or k
 
 ## Project status
 
-**Early preview — FairSky 0.0.7.4.** The x64 development package has been built, signed, installed and checked in the actual Command Palette environment. The user verified the home page and detailed forecast in light/dark themes, confirmed the updated outlined icons, and confirmed cached data remained available offline and refreshed after connectivity returned.
+**Development preview — FairSky 0.0.8.0.** City search and management are implemented in this branch. The previous 0.0.7.4 build was visually accepted by the user, including outlined icons and offline weather recovery. The new management interface still requires acceptance in the actual Command Palette UI.
 
-The latest implementation passed 108 automated assertions covering card states, temperature formatting, SDK notifications, navigation, disposal and bundled weather images. These are local checks; GitHub Actions did not run checks for PR #3.
+The implementation passed 149 local automated assertions. Live checks found New York, Berlin and London through Open-Meteo Geocoding and retrieved forecasts for all three from MET Norway, without changing the user's saved cities. Local tests cover legacy configuration, persistence, duplicates, ordering, corruption/external-edit protection, search errors, stale responses and Dock notifications.
 
 A public, trusted installer has not been released. Local development signing is required. The build can report a missing `mspdbcmf.exe` warning: this prevents generating a symbols package, but the tested MSIX build and signature verification succeeded.
 
+### City search and saved cities
+
+Open FairSky and type one city name at a time (at least two characters). Search starts after a short pause. Country and region help distinguish results. **Enter** opens the forecast without saving; **More / Ещё → Добавить в мои города** saves it. The forecast page also exposes the save/remove actions. Clear the search box to return to your saved list.
+
+Saved cities offer **Удалить из моих городов**, **Переместить выше** and **Переместить ниже**. Up to 12 cities can be added; repeated coordinates are not added twice. Existing files with more entries are retained without truncation. Removing all cities keeps an empty list after restart.
+
+Configuration remains an array in `%LOCALAPPDATA%\FairSky\cities.json`. Old name/latitude/longitude entries still load; new results can additionally store country and region. Updates replace the file atomically and keep the previous version in `cities.json.bak`. A malformed file or a detected external edit is not overwritten: fix the file and reload the extension before further edits.
+
 ### Current limitations
 
-- Search on the home page filters configured cities; it does not yet search for new cities worldwide.
-- Cities are configured through `%LOCALAPPDATA%\FairSky\cities.json`; there is no in-app add/remove interface yet.
-- All configured cities currently appear in Dock. Selecting a separate Dock subset and changing its order are planned.
-- The forecast cache is in memory and does not survive an extension restart. Offline display requires an earlier successful forecast during the same session.
-- Dock controls card dimensions and typography, so long names or conditions may be shortened by the host.
+- Every saved city still appears in Dock; a separate selection and ordering for Dock belongs to the next sprint.
+- Worldwide city search requires internet access. Previously successful search queries are cached briefly in memory; saved cities remain available when search fails.
+- Weather caching is in memory and does not survive an extension restart. Offline forecasts require an earlier successful fetch in the same session.
+- City identity currently uses coordinates rounded to four decimal places. Different geocoding points for the same named city can be separate entries.
+- Dock controls dimensions and typography, so long labels may be shortened by the host.
 - Daily forecasts are grouped by UTC date, rather than the city's local date.
 
-## Next development streams
+## Next development stream: cities shown in Dock
 
-These features are planned and are not included in 0.0.7.4.
-
-### 1. City search and management
-
-Search for cities such as New York, Berlin or London, distinguish results by country/region, and open a forecast without saving the city. Provide an explicit action to add a city to the saved list, plus removal and reordering. Preserve existing city configuration when upgrading.
-
-Worldwide city lookup will need a geocoding source; weather forecasts will continue to use MET Norway.
-
-### 2. Cities shown in Dock
-
-Choose which saved cities appear in Dock and their order, including the option to show none. Removing a city from Dock should not remove it from the saved list. The number of selected cities determines the number of cards.
+Choose which saved cities appear in Dock and their order, including the option to show none. Removing a city from Dock should not remove it from the saved list. The number of selected cities determines the number of cards. This separate Dock selection is not part of 0.0.8.0.
 
 ## Build and check
 
@@ -66,13 +66,17 @@ dotnet build FairSky/FairSky.csproj -c Debug -r win-x64 -p:Platform=x64 -p:Gener
 
 Sign the MSIX with your trusted local development certificate before installation. Never commit signing keys, PFX files or private user configuration. A successful build alone does not verify the visible Command Palette interface.
 
+## City search attribution
+
+City lookup uses [Open-Meteo Geocoding](https://open-meteo.com/en/docs/geocoding-api), with location data from [GeoNames](https://www.geonames.org/). This is separate from weather forecasts, which continue to use MET Norway. The current personal/non-commercial preview uses the public endpoint without an API key; commercial use must follow the provider's terms.
+
 ## Weather data attribution
 
 Forecast data: [Norwegian Meteorological Institute (MET Norway)](https://api.met.no/). Respect the API's identification, caching and attribution requirements. Forecast values are modeled data and may differ from observed conditions.
 
 ## Privacy
 
-FairSky requests forecasts for configured latitude/longitude coordinates from `api.met.no`. The current preview does not require an account. Weather icons are bundled locally and do not make image requests. A fuller privacy statement will accompany the public release.
+FairSky sends typed city search queries to `geocoding-api.open-meteo.com` and requests forecasts for selected latitude/longitude coordinates from `api.met.no`. Merely viewing a search result does not save it to the city list. The current preview does not require an account. Weather icons are bundled locally and do not make image requests. A fuller privacy statement will accompany the public release.
 
 ## License and contributing
 
