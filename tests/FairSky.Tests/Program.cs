@@ -32,6 +32,19 @@ Check(DockWeatherPresentation.Unavailable(city).Subtitle.Contains("MET Norway"),
 var longCity = city with { Name = "Петропавловск-Камчатский" };
 Check(DockWeatherPresentation.FromWeather(longCity, weather).Title.EndsWith(longCity.Name, StringComparison.Ordinal), "Extension must not truncate city names");
 
+// Asset resolution must work from the built output, including all weather groups.
+foreach (int code in new[] { 0, 1, 2, 3, 45, 48, 51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99, -1 })
+{
+    string source = WeatherIcons.Source(code);
+    Check(System.IO.File.Exists(source), $"Packaged weather image missing for {code}");
+    var bytes = System.IO.File.ReadAllBytes(source);
+    Check(bytes.Length > 8 && bytes[0] == 137 && bytes[1] == 80 && bytes[2] == 78 && bytes[3] == 71, "Weather asset must be a PNG");
+    var uri = new Uri(source).AbsoluteUri;
+    Check(WeatherIcons.Markdown(code).Contains(uri, StringComparison.Ordinal), "Details and Dock must use the same local artwork");
+}
+Check(DockWeatherPresentation.FromWeather(city, weather).IconSource == WeatherIcons.Source(weather.Code), "Dock uses packaged artwork");
+Check(DockWeatherPresentation.FromWeather(city, weather with { Stale = true }).IconSource == WeatherIcons.Source(weather.Code), "Offline snapshot retains its weather artwork");
+
 // Check actual installed SDK notifications, not a substitute ListItem implementation.
 var item = new ListItem(new NoOpCommand());
 var changes = new List<string>();

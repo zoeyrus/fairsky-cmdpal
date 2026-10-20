@@ -49,7 +49,7 @@ internal sealed partial class FairSkyDockItem : ListItem, IDisposable
         {
             if (_disposed) return;
             // Toolkit setters raise PropChanged; no polling or list rebuild is needed.
-            Icon = new IconInfo(presentation.Symbol);
+            Icon = new IconInfo(presentation.IconSource);
             Title = presentation.Title;
             Subtitle = presentation.Subtitle;
         }

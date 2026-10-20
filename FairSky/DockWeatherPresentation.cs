@@ -3,7 +3,7 @@ using System.Globalization;
 namespace FairSky;
 
 // Native Dock owns typography, dimensions and theme colors. Keep both lines short.
-internal sealed record DockWeatherPresentation(string Title, string Subtitle, string Symbol)
+internal sealed record DockWeatherPresentation(string Title, string Subtitle, string IconSource)
 {
     public static DockWeatherPresentation Loading(City city) =>
         new(city.Name, "Загрузка погоды…", "\uE895");
@@ -18,6 +18,6 @@ internal sealed record DockWeatherPresentation(string Title, string Subtitle, st
         return new(
             $"{temperature}° · {city.Name}",
             weather.Stale ? $"Устарело · {condition}" : condition,
-            WeatherService.Symbol(weather.Code));
+            WeatherIcons.Source(weather.Code));
     }
 }

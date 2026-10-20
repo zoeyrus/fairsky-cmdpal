@@ -11,7 +11,7 @@
   <Identity
     Name="FairSky"
     Publisher="CN=FairSky Development"
-    Version="0.0.7.3" />
+    Version="0.0.7.4" />
   <!-- When you're ready to publish your extension, you'll need to change the
        Publisher= to match your own identity -->
 

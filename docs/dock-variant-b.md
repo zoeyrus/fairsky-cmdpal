@@ -5,7 +5,11 @@
 Uses the installed `Microsoft.CommandPalette.Extensions` 0.9.260303001 package.
 Each existing `ListItem` now has a separate weather `Icon`, a temperature-first
 `Title` (`+12° · Москва`) and a short condition `Subtitle` (`Ясно`).
-The first iteration reuses `WeatherService.Symbol` as permitted by the design brief.
+Version 0.0.7.4 replaces font-dependent emoji with original local color artwork.
+Nine PNG icons share a dark contour and a narrow light outer line for light/dark
+surfaces. Editable SVG sources are in `FairSky/Assets/Weather`. The same images
+are used by Dock, the native home-list icon slot, and the forecast heading.
+No image downloads or additional HTTP clients are needed.
 Loading and unavailable states use native Segoe glyphs. No custom window or renderer.
 
 Font size, colors, line layout and truncation are controlled by the Dock host;
@@ -25,10 +29,10 @@ Upstream source is explanatory, not proof of the installed host's visual behavio
 - Clicking still uses the existing `FairSkyPage` with its existing ID.
 - Provider and extension disposal now dispose Dock timers. Queued callbacks and
   in-flight completions cannot publish card updates after disposal.
-- WeatherService, home page, detailed forecast, manifest, COM IDs and cities.json
-  schema are unchanged. No private certificates are included.
+- WeatherService, forecast text, COM IDs and cities.json schema are unchanged;
+  home/details changes are limited to icons, and the package version is incremented. No private certificates are included.
 
-## Verification (2026-10-19)
+## Initial verification (2026-10-19)
 
 Windows .NET SDK 10.0.402; target win-x64.
 
@@ -51,9 +55,22 @@ The package version remains 0.0.7.2. The generated MSIX is unsigned, not an
 installation-ready release. Use the existing local development signing setup
 for deployment; do not commit certificates or keys.
 
-## Required Windows acceptance before merging
+## Icon update verification (2026-10-20)
 
-Not yet performed on the updated package:
+Version 0.0.7.4 passed 108 assertions, including PNG availability for every
+supported weather code, shared local image paths for Dock/details, and stale
+snapshot icon preservation. Signed x64 MSIX generation succeeded; SignTool
+verified the signature and all nine PNG files were checked byte-for-byte inside
+the package. The existing missing-mspdbcmf symbols-package warning remains.
+The light/dark asset preview was inspected; actual host rendering of these new
+icons still requires user verification after installation.
+
+## Windows acceptance before merging
+
+The user verified the 0.0.7.3 home/details pages in both themes, Dock in both
+themes, and cached data while offline followed by updates after reconnection.
+Light-theme screenshots exposed pale emoji; 0.0.7.4 addresses this with outlines.
+Recheck the new icon rendering on the installed 0.0.7.4 package:
 
 - Deploy the locally signed build and reload the extension.
 - Verify Moscow, Minsk and Tokyo; inspect long names in light and dark themes.

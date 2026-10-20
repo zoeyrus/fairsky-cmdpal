@@ -41,6 +41,7 @@ internal sealed partial class FairSkyPage : ContentPage
         try
         {
             var data = await _weather.GetAsync(_city).ConfigureAwait(false);
+            Icon = WeatherIcons.Create(data.Code);
             _markdown = FormatForecast(data);
         }
         catch (Exception ex)
@@ -62,7 +63,7 @@ private string FormatForecast(WeatherData weather)
     var culture = CultureInfo.GetCultureInfo("ru-RU");
     var sb = new StringBuilder();
 
-    sb.AppendLine(culture, $"# {WeatherService.Symbol(weather.Code)} Погода — {_city.Name}");
+    sb.AppendLine(culture, $"# {WeatherIcons.Markdown(weather.Code)} Погода — {_city.Name}");
     sb.AppendLine();
     sb.AppendLine(culture, $"## {weather.Temperature:+0.#;-0.#;0} °C");
     sb.AppendLine();
