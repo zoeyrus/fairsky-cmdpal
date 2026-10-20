@@ -65,18 +65,17 @@ the package. The existing missing-mspdbcmf symbols-package warning remains.
 The light/dark asset preview was inspected; actual host rendering of these new
 icons still requires user verification after installation.
 
-## Windows acceptance before merging
+## User acceptance (2026-10-20)
 
-The user verified the 0.0.7.3 home/details pages in both themes, Dock in both
-themes, and cached data while offline followed by updates after reconnection.
-Light-theme screenshots exposed pale emoji; 0.0.7.4 addresses this with outlines.
-Recheck the new icon rendering on the installed 0.0.7.4 package:
+The user supplied screenshots verifying the 0.0.7.3 home/details pages in both
+themes and Dock in both themes. The user also confirmed cached weather remained
+available offline and refreshed after connectivity returned. Light-theme
+screenshots exposed pale emoji, which the 0.0.7.4 artwork addresses.
 
-- Deploy the locally signed build and reload the extension.
-- Verify Moscow, Minsk and Tokyo; inspect long names in light and dark themes.
-- Check that a Dock click opens the existing detailed forecast and the home page works.
-- Check refresh, restart, and disconnect/reconnect behavior both before and after
-  a successful forecast (cached/offline states).
-- Keep existing PowerToys settings and provider cache; do not reset them as part of this test.
+After installing 0.0.7.4, the user confirmed the new icons and outlines appeared
+correctly in the actual UI. This is user-reported visual acceptance, separate
+from automated checks and the asset preview. No PowerToys settings or provider
+cache were reset.
 
-The PR should remain a draft until this user acceptance is complete.
+PR #3 was merged on 2026-10-20. City search/management and choosing the Dock subset
+are separate future development streams; see the repository README.
